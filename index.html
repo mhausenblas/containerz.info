@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="containerz.info : All things Linux containers">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>containerz.info</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/mhausenblas/containerz.info">View on GitHub</a>
+
+          <h1 id="project_title">containerz.info</h1>
+          <h2 id="project_tagline">All things Linux containers</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/mhausenblas/containerz.info/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/mhausenblas/containerz.info/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>This website is dedicated to the documentation of Linux containers. As mentioned <a href="https://articles.microservices.com/containers-are-a-lie-2521afda1f81">elsewhere</a>, in a sense there 
+are no containers per se, but Linux kernel features such as namespaces and cgroups that are
+bundled and used in different ways to provide an abstraction we call <code>container</code>. Examples of 
+this bundling are Docker, CoreOS <a href="https://github.com/appc/spec/">appc</a>, OCI <a href="https://runc.io/">runc</a>,
+Canonical <a href="https://linuxcontainers.org/">LXC/LXD</a>, and <a href="https://openvz.org/">OpenVZ</a>.</p>
+
+<h2>
+<a id="terminology" class="anchor" href="#terminology" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Terminology</h2>
+
+<p>Conceptually the ER diagram for namespaces, cgroups and process (groups) looks as follows:</p>
+
+<p><img src="img/n-p-c.png" alt="cinf mon"></p>
+
+<p>Read: a process (or more precise a process group) can be in one or more namespaces and can be controlled by one or more cgroups, where the namespaces provide isolation concerning a certain aspect, such as user IDs, networking stack or mount points and the cgroups allowing to control resource consumption as well as provide accounting information in terms of resource usage. </p>
+
+<h2>
+<a id="linux-namespaces" class="anchor" href="#linux-namespaces" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Linux namespaces</h2>
+
+<p><a href="http://man7.org/linux/man-pages/man7/namespaces.7.html">namespaces</a>:</p>
+
+<ul>
+<li>Mount/<code>CLONE_NEWNS</code> (since Linux 2.4.19) via <code>mount</code>, <code>/proc/$PID/mounts</code>: filesystem mount points</li>
+<li>UTS/<code>CLONE_NEWUTS</code> (since Linux 2.6.19) via <code>uname -n</code>, <code>hostname -f</code> : nodename/hostname and (NIS) domain name</li>
+<li>IPC/<code>CLONE_NEWIPC</code> (since Linux 2.6.19) via <code>/proc/sys/fs/mqueue</code>, <code>/proc/sys/kernel</code>, <code>/proc/sysvipc</code>: interprocess communication resource isolation: System V IPC objects, POSIX message queues</li>
+<li>PID/<code>CLONE_NEWPID</code> (since Linux 2.6.24) via <code>/proc/$PID/status -&gt; NSpid, NSpgid</code>: process ID number space isolation: PID inside/PID outside the namespace; PID namespaces can be nested</li>
+<li>Network/<code>CLONE_NEWNET</code> (completed in Linux 2.6.29) via <code>ip netns list</code>, <code>/proc/net</code>, <code>/sys/class/net</code>: network system resources: network devices, IP addresses, IP routing tables, port numbers, etc.</li>
+<li>User/<code>CLONE_NEWUSER</code> (completed in Linux 3.8) via <code>id</code>, <code>/proc/$PID/uid_map</code>, <code>/proc/$PID/gid_map</code>: user and group ID number space isolation. UID+GIDs inside/outside the namespace</li>
+<li>Cgroup/<code>CLONE_NEWCGROUP</code> (since Linux 4.6) via <code>/sys/fs/cgroup/</code>, <code>/proc/cgroups</code>, <code>/proc/$PID/cgroup</code>: cgroups</li>
+<li>To list all namespaces of a process: <code>ls -l /proc/$PID/ns</code>
+</li>
+</ul>
+
+<h2>
+<a id="linux-cgroups" class="anchor" href="#linux-cgroups" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Linux cgroups</h2>
+
+<p><a href="http://man7.org/linux/man-pages/man7/cgroups.7.html">cgroups</a>:</p>
+
+<ul>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/cpusets.txt">cpuset</a></li>
+<li><a href="https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.txt">cpu</a></li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/cpuacct.txt">cpuacct</a></li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/memory.txt">memory</a></li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/devices.txt">devices</a></li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/blkio-controller.txt">blkio</a></li>
+<li>perf_event</li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/net_cls.txt">net_cls</a></li>
+</ul>
+
+<h3>
+<a id="tooling" class="anchor" href="#tooling" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tooling</h3>
+
+<ul>
+<li>systemd <a href="https://www.freedesktop.org/software/systemd/man/systemd-cgtop.html">cgtop</a>
+</li>
+<li>
+<a href="http://karelzak.blogspot.ie/2015/12/lsns8-new-command-to-list-linux.html">lsns</a> via <a href="https://github.com/karelzak/util-linux">karelzak/util-linux</a>
+</li>
+<li><a href="https://github.com/c9s/goprocinfo">c9s/goprocinfo</a></li>
+<li><a href="https://github.com/shirou/gopsutil/">shirou/gopsutil</a></li>
+<li><a href="https://github.com/yadutaf/ctop">yadutaf/ctop</a></li>
+</ul>
+
+<h2>
+<a id="reading-material" class="anchor" href="#reading-material" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reading material</h2>
+
+<ul>
+<li><a href="http://man7.org/linux/man-pages/man8/lsns.8.html">man lsns</a></li>
+<li>
+<a href="https://blogs.rdoproject.org/7761/hands-on-linux-sandbox-with-namespaces-and-cgroups">Hands on Linux sandbox with namespaces and cgroups</a>, Tristan Cacqueray (2015)</li>
+<li>
+<a href="https://lwn.net/Articles/531114/">Namespaces in operation, part 1: namespaces overview</a>, lwn.net (2013)</li>
+<li>
+<a href="https://www.youtube.com/watch?v=zMJD8PJKoYQ">Netdev 1.1 - Namespaces and CGroups, the basis of Linux containers</a>, Rami Rosen, video (2016)</li>
+<li>
+<a href="http://www.haifux.org/lectures/299/netLec7.pdf">Resource management: Linux kernel Namespaces and cgroups</a>, Rami Rosen (2013)</li>
+<li>
+<a href="https://www.mjmwired.net/kernel/Documentation/filesystems/proc.txt">THE <code>/proc</code> FILESYSTEM</a>,  Terrehon Bowden et al (1999 - 2009)</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">containerz.info maintained by <a href="https://github.com/mhausenblas">mhausenblas</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
