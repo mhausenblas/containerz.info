@@ -49,10 +49,10 @@ Canonical <a href="https://linuxcontainers.org/">LXC/LXD</a>, and <a href="https
 <p><a href="http://man7.org/linux/man-pages/man7/namespaces.7.html">namespaces</a>:</p>
 
 <ul>
-<li><a href="http://man7.org/linux/man-pages/man7/mount_namespaces.7.html">Mount</a>/<code>CLONE_NEWNS</code> (since Linux 2.4.19) via <code>mount</code>, <code>/proc/$PID/mounts</code>: filesystem mount points</li>
+<li><a href="http://man7.org/linux/man-pages/man7/mount_namespaces.7.html">Mount</a>/<code>CLONE_NEWNS</code> (since Linux 2.4.19) via <code>/proc/$PID/mounts</code>: filesystem mount points</li>
 <li><a href="https://lwn.net/Articles/179345/">UTS</a>/<code>CLONE_NEWUTS</code> (since Linux 2.6.19) via <code>uname -n</code>, <code>hostname -f</code> : nodename/hostname and (NIS) domain name</li>
 <li><a href="https://lwn.net/Articles/187274/">IPC</a>/<code>CLONE_NEWIPC</code> (since Linux 2.6.19) via <code>/proc/sys/fs/mqueue</code>, <code>/proc/sys/kernel</code>, <code>/proc/sysvipc</code>: interprocess communication resource isolation: System V IPC objects, POSIX message queues</li>
-<li><a href="http://man7.org/linux/man-pages/man7/pid_namespaces.7.html">PID</a>/<code>CLONE_NEWPID</code> (since Linux 2.6.24) via <code>/proc/$PID/status -&gt; NSpid, NSpgid</code>: process ID number space isolation: PID inside/PID outside the namespace; PID namespaces can be nested</li>
+<li><a href="http://man7.org/linux/man-pages/man7/pid_namespaces.7.html">PID</a>/<code>CLONE_NEWPID</code> (since Linux 2.6.24) via <code>/proc/$PID/status</code>: process ID number space isolation: PID inside/PID outside the namespace; PID namespaces can be nested</li>
 <li><a href="https://lwn.net/Articles/259217/">Network</a>/<code>CLONE_NEWNET</code> (completed in Linux 2.6.29) via <code>ip netns list</code>, <code>/proc/net</code>, <code>/sys/class/net</code>: network system resources: network devices, IP addresses, IP routing tables, port numbers, etc.</li>
 <li><a href="https://lwn.net/Articles/528078/">User</a>/<code>CLONE_NEWUSER</code> (completed in Linux 3.8) via <code>id</code>, <code>/proc/$PID/uid_map</code>, <code>/proc/$PID/gid_map</code>: user and group ID number space isolation. UID+GIDs inside/outside the namespace</li>
 <li><a href="http://man7.org/linux/man-pages/man7/cgroup_namespaces.7.html">Cgroup</a>/<code>CLONE_NEWCGROUP</code> (since Linux 4.6) via <code>/sys/fs/cgroup/</code>, <code>/proc/cgroups</code>, <code>/proc/$PID/cgroup</code>: cgroups</li>
