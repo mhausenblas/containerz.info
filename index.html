@@ -33,14 +33,18 @@ Canonical <a href="https://linuxcontainers.org/">LXC/LXD</a>, and <a href="https
 <h2>
 <a id="terminology" class="anchor" href="#terminology" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Terminology</h2>
 
-<p>Conceptually the ER diagram for namespaces, cgroups and process (groups) looks as follows:</p>
-
+<p>Conceptually, a Linux container is made up of three things:</p>
+<ul>
+  <li><a href="#namespaces">namespaces</a> for providing resource isolation</li>
+  <li><a href="#cgroups">cgroups</a> for resource consumption throttling and resource consumption accounting</li>
+  <li>copy-on-write filesystems for state</li>
+</ul>
+<p>A container's core is a process (group). The ER diagram for namespaces, cgroups and process (groups) looks as follows:</p>
 <p><img src="images/n-p-c.png" alt="namespaces, cgroups and process (groups) ER diagram"></p>
-
-<p>Read: a process (or more precise a process group) can be in one or more namespaces and can be controlled by one or more cgroups, where the namespaces provide isolation concerning a certain aspect, such as user IDs, networking stack or mount points and the cgroups allowing to control resource consumption as well as provide accounting information in terms of resource usage. </p>
+<p>Read above ER diagram as: a process (group) can be in one or more namespaces and can be controlled by one or more cgroups</p>
 
 <h2>
-<a id="linux-namespaces" class="anchor" href="#linux-namespaces" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Linux namespaces</h2>
+<a id="namespaces" class="anchor" href="#namespaces" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Linux namespaces</h2>
 
 <p><a href="http://man7.org/linux/man-pages/man7/namespaces.7.html">namespaces</a>:</p>
 
@@ -57,21 +61,25 @@ Canonical <a href="https://linuxcontainers.org/">LXC/LXD</a>, and <a href="https
 </ul>
 
 <h2>
-<a id="linux-cgroups" class="anchor" href="#linux-cgroups" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Linux cgroups</h2>
+<a id="cgroups" class="anchor" href="#cgroups" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Linux cgroups</h2>
 
 <p><a href="http://man7.org/linux/man-pages/man7/cgroups.7.html">cgroups</a>:</p>
 
 <ul>
-<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/cpusets.txt">cpuset</a></li>
-<li><a href="https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.txt">cpu</a></li>
-<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/cpuacct.txt">cpuacct</a></li>
-<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/memory.txt">memory</a></li>
-<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/devices.txt">devices</a></li>
-<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/blkio-controller.txt">blkio</a></li>
-<li>perf_event</li>
-<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/net_cls.txt">net_cls</a></li>
+<li><a href="https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.txt">cpu</a>/<code>CONFIG_CGROUP_SCHED</code> (since Linux 2.6.24)</li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/cpuacct.txt">cpuacct</a>/<code>CONFIG_CGROUP_CPUACCT</code> (since Linux 2.6.24) </li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/cpusets.txt">cpuset</a>/<code>CONFIG_CPUSETS</code> (since Linux 2.6.24)</li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/memory.txt">memory</a>/<code>CONFIG_MEMCG</code> (since Linux 2.6.25)</li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/devices.txt">devices</a>/<code>CONFIG_CGROUP_DEVICE</code> (since Linux 2.6.26) </li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/freezer-subsystem.txt">freezer</a>/<code>CONFIG_CGROUP_FREEZER</code> (since Linux 2.6.28)</li>  
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/net_cls.txt">net_cls</a>/<code>CONFIG_CGROUP_NET_CLASSID</code> (since Linux 2.6.29)</li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/blkio-controller.txt">blkio</a>/<code>CONFIG_BLK_CGROUP</code> (since Linux 2.6.33)</li>
+<li><a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/plain/tools/perf/Documentation/perf-record.txt">perf_event</a>/<code>CONFIG_CGROUP_PERF</code> (since Linux 2.6.39)</li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/blkio-controller.txt">net_prio</a>/<code>CONFIG_CGROUP_NET_PRIO</code> (since Linux 3.3)</li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/blkio-controller.txt">hugetlb</a>/<code>CONFIG_CGROUP_HUGETLB</code> (since Linux 3.5)</li>
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/blkio-controller.txt">pids</a>/<code>CONFIG_CGROUP_PIDS</code> (since Linux 4.3)</li>
 </ul>
-
+        
 <h2>
 <a id="tooling" class="anchor" href="#tooling" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tooling</h2>
 
@@ -87,6 +95,8 @@ Canonical <a href="https://linuxcontainers.org/">LXC/LXD</a>, and <a href="https
 <a id="reading-material" class="anchor" href="#reading-material" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reading material</h2>
 
 <ul>
+<li>
+<a href="http://web.eece.maine.edu/~vweaver/projects/perf_events/index.html">The Unofficial Linux Perf Events Web-Page</a></li>
 <li>
 <a href="https://blogs.rdoproject.org/7761/hands-on-linux-sandbox-with-namespaces-and-cgroups">Hands on Linux sandbox with namespaces and cgroups</a>, Tristan Cacqueray (2015)</li>
 <li>
