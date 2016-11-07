@@ -1,6 +1,5 @@
 /*******************************************************************************
-Slate Theme for GitHub Pages
-by Jason Costello, @jsncostello
+Based on Slate Theme for GitHub Pages by Jason Costello, @jsncostello
 *******************************************************************************/
 
 @import url(github-light.css);
@@ -74,7 +73,7 @@ h1 {
 h2 {
   padding-bottom: 10px;
   font-size: 32px;
-  background: url('../images/bg_hr.png') repeat-x bottom;
+  border-left: 2px solid #a0a0a0;
 }
 
 h3 {
