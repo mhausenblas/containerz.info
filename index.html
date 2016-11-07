@@ -20,6 +20,7 @@
           <p><a href="#terminology">terminology</a> |
              <a href="#namespaces">namespaces</a> | 
              <a href="#cgroups">cgroups</a> |
+             <a href="#filesystems">filesytems</a> |
              <a href="#tooling">tooling</a> |
              <a href="#see-also">see also</a>
           </p>
@@ -40,9 +41,9 @@ Canonical <a href="https://linuxcontainers.org/">LXC/LXD</a>, and <a href="https
 
 <p>Conceptually, a Linux container is made up of three things:</p>
 <ul>
-  <li><a href="#namespaces">namespaces</a> for providing resource isolation</li>
+  <li><a href="#namespaces">namespaces</a> for providing compute isolation</li>
   <li><a href="#cgroups">cgroups</a> for resource consumption throttling and resource consumption accounting</li>
-  <li>copy-on-write filesystems for state</li>
+  <li>copy-on-write <a href="#filesystems">filesystems</a> for state</li>
 </ul>
 <p>A container's core is a process (group). The ER diagram for namespaces, cgroups and process (groups) looks as follows:</p>
 <p><img src="images/n-p-c.png" alt="namespaces, cgroups and process (groups) ER diagram"></p>
@@ -82,6 +83,18 @@ Canonical <a href="https://linuxcontainers.org/">LXC/LXD</a>, and <a href="https
 <li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/hugetlb.txt">hugetlb</a>/<code>CONFIG_CGROUP_HUGETLB</code> (since Linux 3.5)</li>
 <li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/pids.txt">pids</a>/<code>CONFIG_CGROUP_PIDS</code> (since Linux 4.3)</li>
 </ul>
+
+<h2>
+<a id="filesystems" class="anchor" href="#filesystems" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>COW filesystems</h2>
+
+<ul>
+<li><a href="http://aufs.sourceforge.net/">AUFS</a></li>
+<li><a href="https://btrfs.wiki.kernel.org/">btrfs</a></li>
+<li><a href="https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt">Overlay Filesystem</a></li>
+<li><a href="http://unionfs.filesystems.org/">Unionfs</a></li>
+<li><a href="http://zfsonlinux.org/">ZFS</a> on Linux</li>
+</ul>    
+        
         
 <h2>
 <a id="tooling" class="anchor" href="#tooling" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tooling</h2>
@@ -122,11 +135,15 @@ Namespaces in operation <a href="https://lwn.net/Articles/531114/">part 1: names
 <h3>filesystems</h3>
 <ul>
 <li>
+<a href="https://docs.docker.com/engine/userguide/storagedriver/">Docker storage drivers</a>, Docker docs</li>
+<li>
+<a href="http://jpetazzo.github.io/assets/2015-07-01-deep-dive-into-docker-storage-drivers.html">Deep dive into Docker storage drivers</a>, Jérôme Petazzoni (2015)</li>
+<li>
 <a href="https://www.mjmwired.net/kernel/Documentation/filesystems/proc.txt">THE /proc FILESYSTEM</a>, Terrehon Bowden et al (1999 - 2009)</li>
 <li>
-<a href="https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt">Overlay Filesystem</a>, Neil Brown</li>
-<li>
 <a href="http://lwn.net/Articles/324291/">Unioning file systems: Architecture, features, and design choices</a>, Valerie Aurora, (2009)</li>
+<li>
+<a href="http://hackerboss.com/copy-on-write-101-part-1-what-is-it/">Copy-On-Write 101 – Part 1: What Is It?</a>, Ville Laurikari, (2009)</li>        
 </ul>
       </section>
     </div>
