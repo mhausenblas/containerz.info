@@ -18,7 +18,7 @@
           <h1 id="project_title">All things Linux containers</h1>
           <h2 id="project_tagline">A container a day keeps the pager away!</h2>
           <p><a href="#terminology">terminology</a> |
-             <a href="#namespaces">namespaces</a> | 
+             <a href="#namespaces">namespaces</a> |
              <a href="#cgroups">cgroups</a> |
              <a href="#filesystems">filesytems</a> |
              <a href="#tooling">tooling</a> |
@@ -30,9 +30,9 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p>This little website here is dedicated to the documentation of Linux containers. As mentioned <a href="https://articles.microservices.com/containers-are-a-lie-2521afda1f81">elsewhere</a>, in a sense there 
+        <p>This little website here is dedicated to the documentation of Linux containers. As mentioned <a href="https://articles.microservices.com/containers-are-a-lie-2521afda1f81">elsewhere</a>, in a sense there
 are no containers per se, but Linux kernel features such as namespaces and cgroups that are
-bundled and used in different ways to provide an abstraction we call <code>container</code>. Examples of 
+bundled and used in different ways to provide an abstraction we call <code>container</code>. Examples of
 this bundling are Docker, CoreOS <a href="https://github.com/appc/spec/">appc</a>, OCI <a href="https://runc.io/">runc</a>,
 Canonical <a href="https://linuxcontainers.org/">LXC/LXD</a>, and <a href="https://openvz.org/">OpenVZ</a>.</p>
 
@@ -58,8 +58,8 @@ Canonical <a href="https://linuxcontainers.org/">LXC/LXD</a>, and <a href="https
 <li><a href="http://man7.org/linux/man-pages/man7/mount_namespaces.7.html">Mount</a>/<code>CLONE_NEWNS</code> (since Linux 2.4.19) via <code>/proc/$PID/mounts</code>: filesystem mount points</li>
 <li><a href="https://lwn.net/Articles/179345/">UTS</a>/<code>CLONE_NEWUTS</code> (since Linux 2.6.19) via <code>uname -n</code>, <code>hostname -f</code> : nodename/hostname and (NIS) domain name</li>
 <li><a href="https://lwn.net/Articles/187274/">IPC</a>/<code>CLONE_NEWIPC</code> (since Linux 2.6.19) via <code>/proc/sys/fs/mqueue</code>, <code>/proc/sys/kernel</code>, <code>/proc/sysvipc</code>: interprocess communication resource isolation: System V IPC objects, POSIX message queues</li>
-<li><a href="http://man7.org/linux/man-pages/man7/pid_namespaces.7.html">PID</a>/<code>CLONE_NEWPID</code> (since Linux 2.6.24) via <code>/proc/$PID/status</code>: process ID number space isolation: PID inside/PID outside the namespace; PID namespaces can be nested</li>
-<li><a href="https://lwn.net/Articles/259217/">Network</a>/<code>CLONE_NEWNET</code> (completed in Linux 2.6.29) via <code>ip netns list</code>, <code>/proc/net</code>, <code>/sys/class/net</code>: network system resources: network devices, IP addresses, IP routing tables, port numbers, etc.</li>
+<li><a href="https://lwn.net/Articles/259217/">PID</a>/<code>CLONE_NEWPID</code> (since Linux 2.6.24) via <code>/proc/$PID/status</code>: process ID number space isolation: PID inside/PID outside the namespace; PID namespaces can be nested</li>
+<li><a href="https://lwn.net/Articles/219794/">Network</a>/<code>CLONE_NEWNET</code> (completed in Linux 2.6.29) via <code>ip netns list</code>, <code>/proc/net</code>, <code>/sys/class/net</code>: network system resources: network devices, IP addresses, IP routing tables, port numbers, etc.</li>
 <li><a href="https://lwn.net/Articles/528078/">User</a>/<code>CLONE_NEWUSER</code> (completed in Linux 3.8) via <code>id</code>, <code>/proc/$PID/uid_map</code>, <code>/proc/$PID/gid_map</code>: user and group ID number space isolation. UID+GIDs inside/outside the namespace</li>
 <li><a href="http://man7.org/linux/man-pages/man7/cgroup_namespaces.7.html">Cgroup</a>/<code>CLONE_NEWCGROUP</code> (since Linux 4.6) via <code>/sys/fs/cgroup/</code>, <code>/proc/cgroups</code>, <code>/proc/$PID/cgroup</code>: cgroups</li>
 </ul>
@@ -75,7 +75,7 @@ Canonical <a href="https://linuxcontainers.org/">LXC/LXD</a>, and <a href="https
 <li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/cpusets.txt">cpuset</a>/<code>CONFIG_CPUSETS</code> (since Linux 2.6.24)</li>
 <li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/memory.txt">memory</a>/<code>CONFIG_MEMCG</code> (since Linux 2.6.25)</li>
 <li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/devices.txt">devices</a>/<code>CONFIG_CGROUP_DEVICE</code> (since Linux 2.6.26) </li>
-<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/freezer-subsystem.txt">freezer</a>/<code>CONFIG_CGROUP_FREEZER</code> (since Linux 2.6.28)</li>  
+<li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/freezer-subsystem.txt">freezer</a>/<code>CONFIG_CGROUP_FREEZER</code> (since Linux 2.6.28)</li>
 <li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/net_cls.txt">net_cls</a>/<code>CONFIG_CGROUP_NET_CLASSID</code> (since Linux 2.6.29)</li>
 <li><a href="https://www.kernel.org/doc/Documentation/cgroup-v1/blkio-controller.txt">blkio</a>/<code>CONFIG_BLK_CGROUP</code> (since Linux 2.6.33)</li>
 <li><a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/plain/tools/perf/Documentation/perf-record.txt">perf_event</a>/<code>CONFIG_CGROUP_PERF</code> (since Linux 2.6.39)</li>
@@ -93,23 +93,23 @@ Canonical <a href="https://linuxcontainers.org/">LXC/LXD</a>, and <a href="https
 <li><a href="https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt">Overlay Filesystem</a></li>
 <li><a href="http://unionfs.filesystems.org/">Unionfs</a></li>
 <li><a href="http://zfsonlinux.org/">ZFS</a> on Linux</li>
-</ul>    
-        
-        
+</ul>
+
+
 <h2>
 <a id="tooling" class="anchor" href="#tooling" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tooling</h2>
 
 <h3>namespaces and cgroups</h3>
 <ul>
 <li><a href="https://github.com/mhausenblas/cinf">cinf</a></li>
-<li><a href="http://man7.org/linux/man-pages/man1/nsenter.1.html">nsenter</a></li>  
+<li><a href="http://man7.org/linux/man-pages/man1/nsenter.1.html">nsenter</a></li>
 <li><a href="http://man7.org/linux/man-pages/man1/unshare.1.html">unshare</a></li>
 <li><a href="http://man7.org/linux/man-pages/man8/lsns.8.html">man lsns</a> (also: announcement <a href="http://karelzak.blogspot.ie/2015/12/lsns8-new-command-to-list-linux.html">lsns</a>)</li>
 <li>systemd-<a href="https://www.freedesktop.org/software/systemd/man/systemd-cgtop.html">cgtop</a></li>
 <li><a href="https://github.com/peo3/cgroup-utils">cgroup-utils</a></li>
 <li><a href="https://github.com/yadutaf/ctop">yadutaf/ctop</a></li>
 </ul>
-         
+
 <h2>
 <a id="see-also" class="anchor" href="#see-also" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>See also …</h2>
 
@@ -142,7 +142,7 @@ Namespaces in operation <a href="https://lwn.net/Articles/531114/">part 1: names
 <li>
 <a href="http://lwn.net/Articles/324291/">Unioning file systems: Architecture, features, and design choices</a>, Valerie Aurora, (2009)</li>
 <li>
-<a href="http://hackerboss.com/copy-on-write-101-part-1-what-is-it/">Copy-On-Write 101 – Part 1: What Is It?</a>, Ville Laurikari, (2009)</li>        
+<a href="http://hackerboss.com/copy-on-write-101-part-1-what-is-it/">Copy-On-Write 101 – Part 1: What Is It?</a>, Ville Laurikari, (2009)</li>
 </ul>
       </section>
     </div>
@@ -155,7 +155,7 @@ Namespaces in operation <a href="https://lwn.net/Articles/531114/">part 1: names
       </footer>
     </div>
 
-    
+
 
   </body>
 </html>
